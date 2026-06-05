@@ -1,0 +1,13 @@
+{
+  "model": "baseline",
+  "augment": "none",
+  "epochs": 20,
+  "best_accuracy": 0.7758,
+  "final_accuracy": 0.7758,
+  "final_loss": 1.0068623321056367,
+  "params": 620362,
+  "checkpoint": "checkpoints/baseline_none.pth",
+  "model_size_mb": 2.371129035949707,
+  "inference_ms": 0.2992585450192564,
+  "fps": 3341.5921337706595
+}

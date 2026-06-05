@@ -1,0 +1,13 @@
+{
+  "model": "lightweight",
+  "augment": "none",
+  "epochs": 20,
+  "best_accuracy": 0.782,
+  "final_accuracy": 0.782,
+  "final_loss": 0.6534788666248321,
+  "params": 44362,
+  "checkpoint": "checkpoints/lightweight_none.pth",
+  "model_size_mb": 0.1854104995727539,
+  "inference_ms": 0.9375956250005402,
+  "fps": 1066.5578777625203
+}

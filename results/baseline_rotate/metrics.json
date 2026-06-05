@@ -1,0 +1,13 @@
+{
+  "model": "baseline",
+  "augment": "rotate",
+  "epochs": 20,
+  "best_accuracy": 0.8004,
+  "final_accuracy": 0.7935,
+  "final_loss": 0.5985620479106903,
+  "params": 620362,
+  "checkpoint": "checkpoints/baseline_rotate.pth",
+  "model_size_mb": 2.371159553527832,
+  "inference_ms": 0.259492084987869,
+  "fps": 3853.682088402615
+}

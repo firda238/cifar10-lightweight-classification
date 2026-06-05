@@ -1,0 +1,13 @@
+{
+  "model": "lightweight",
+  "augment": "rotate",
+  "epochs": 20,
+  "best_accuracy": 0.7807,
+  "final_accuracy": 0.7791,
+  "final_loss": 0.6555576804161072,
+  "params": 44362,
+  "checkpoint": "checkpoints/lightweight_rotate.pth",
+  "model_size_mb": 0.18549060821533203,
+  "inference_ms": 1.1767591700117919,
+  "fps": 849.7915507979253
+}

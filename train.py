@@ -7,7 +7,7 @@ import torch
 from torch import nn, optim
 from tqdm import tqdm
 
-from data_utils import CIFAR10_CLASSES, build_loaders, set_seed
+from data_utils import AUGMENT_CHOICES, CIFAR10_CLASSES, build_loaders, set_seed
 from models import build_model
 from utils import (
     append_compare_csv,
@@ -80,8 +80,13 @@ def parse_args():
     parser.add_argument(
         "--augment",
         default="rotate",
-        choices=["none", "rotate"],
-        help="Augmentation strategy: none=no augmentation, rotate=random crop + horizontal flip + random rotation.",
+        choices=AUGMENT_CHOICES,
+        help=(
+            "Augmentation strategy: none=no augmentation, "
+            "rotate=random crop + horizontal flip + random rotation, "
+            "noise=random crop + horizontal flip + Gaussian noise, "
+            "strong=crop + flip + rotation + color jitter + Gaussian noise."
+        ),
     )
     parser.add_argument("--data-dir", default="data")
     parser.add_argument("--checkpoint-dir", default="checkpoints")

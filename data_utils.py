@@ -24,6 +24,19 @@ CIFAR10_CLASSES = (
 
 CIFAR10_MEAN = (0.4914, 0.4822, 0.4465)
 CIFAR10_STD = (0.2470, 0.2435, 0.2616)
+AUGMENT_CHOICES = ("none", "rotate", "noise", "strong")
+
+
+class AddGaussianNoise:
+    """Add Gaussian noise to a tensor image before normalization."""
+
+    def __init__(self, mean: float = 0.0, std: float = 0.03):
+        self.mean = mean
+        self.std = std
+
+    def __call__(self, tensor: torch.Tensor) -> torch.Tensor:
+        noise = torch.randn_like(tensor) * self.std + self.mean
+        return torch.clamp(tensor + noise, 0.0, 1.0)
 
 
 def set_seed(seed: int) -> None:
@@ -34,18 +47,18 @@ def set_seed(seed: int) -> None:
 
 def build_transform(augment: str, train: bool) -> transforms.Compose:
     augment = augment.lower()
-    if augment not in {"none", "rotate"}:
-        raise ValueError("augment must be 'none' or 'rotate'")
+    if augment not in AUGMENT_CHOICES:
+        raise ValueError(f"augment must be one of {AUGMENT_CHOICES}")
     ops: list = []
-    if train and augment == "rotate":
-        ops.extend(
-            [
-                transforms.RandomCrop(32, padding=4),
-                transforms.RandomHorizontalFlip(),
-                transforms.RandomRotation(12),
-            ]
-        )
+    if train and augment in {"rotate", "noise", "strong"}:
+        ops.extend([transforms.RandomCrop(32, padding=4), transforms.RandomHorizontalFlip()])
+    if train and augment in {"rotate", "strong"}:
+        ops.append(transforms.RandomRotation(12))
+    if train and augment == "strong":
+        ops.append(transforms.ColorJitter(brightness=0.15, contrast=0.15, saturation=0.12, hue=0.02))
     ops.append(transforms.ToTensor())
+    if train and augment in {"noise", "strong"}:
+        ops.append(AddGaussianNoise(std=0.03 if augment == "noise" else 0.04))
     ops.append(transforms.Normalize(CIFAR10_MEAN, CIFAR10_STD))
     return transforms.Compose(ops)
 
